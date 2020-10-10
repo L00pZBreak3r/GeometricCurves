@@ -13,7 +13,6 @@ namespace GeometricCurvesLibrary
   {
   protected:
     point_t<T> mPivot;
-    const wchar_t* mName = L"";
 
     void printPivot(std::wostream& aOutStream) const
     {
@@ -35,17 +34,12 @@ namespace GeometricCurvesLibrary
       return mPivot;
     }
 
-    const wchar_t* getName() const
-    {
-      return mName;
-    }
-
-
     virtual point_t<T> getCurvePoint(T at) const = 0;
     virtual vector_t<T> getFirstDerivative(T at) const = 0;
 
     virtual void printParameters(std::wostream& aOutStream, bool aPrintPivot = false) const
     {
+      aOutStream << L"curve: ";
       if (aPrintPivot)
         printPivot(aOutStream);
     }

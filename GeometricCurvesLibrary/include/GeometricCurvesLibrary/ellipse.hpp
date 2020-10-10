@@ -16,12 +16,10 @@ namespace GeometricCurvesLibrary
     ellipse_t(T aRadiusX, T aRadiusY, const point_t<T>& aPivot)
       : curve_t<T>(aPivot), mRadiusX(aRadiusX), mRadiusY((aRadiusY > static_cast<T>(0)) ? aRadiusY : aRadiusX)
     {
-      this->mName = L"ellipse";
     }
     ellipse_t(T aRadiusX, T aRadiusY = static_cast<T>(0), T ax = static_cast<T>(0), T ay = static_cast<T>(0), T az = static_cast<T>(0))
       : curve_t<T>(ax, ay, az), mRadiusX(aRadiusX), mRadiusY((aRadiusY > static_cast<T>(0)) ? aRadiusY : aRadiusX)
     {
-      this->mName = L"ellipse";
     }
 
     T getRadiusX() const
@@ -44,7 +42,7 @@ namespace GeometricCurvesLibrary
 
     void printParameters(std::wostream& aOutStream, bool aPrintPivot = false) const override
     {
-      aOutStream << L"RadiusX=" << mRadiusX << L"; RadiusY=" << mRadiusY;
+      aOutStream << L"ellipse: RadiusX=" << mRadiusX << L"; RadiusY=" << mRadiusY;
       if (aPrintPivot)
       {
         aOutStream << L"; ";

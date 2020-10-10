@@ -8,48 +8,47 @@ namespace GeometricCurvesLibrary
 {
 
   template<typename T>
-  class helix_t : public ellipse_t<T>
+  class helix_t : public curve_t<T>
   {
+  protected:
+    T mRadius;
+    T mStep;
+
   public:
     helix_t(T aRadius, T aStep, const point_t<T>& aPivot)
-      : ellipse_t<T>(aRadius, aStep, aPivot)
+      : curve_t<T>(aPivot), mRadius(aRadius), mStep(aStep)
     {
-      this->mName = L"helix";
     }
     helix_t(T aRadius, T aStep, T ax = static_cast<T>(0), T ay = static_cast<T>(0), T az = static_cast<T>(0))
-      : ellipse_t<T>(aRadius, aStep, ax, ay, az)
+      : curve_t<T>(ax, ay, az), mRadius(aRadius), mStep(aStep)
     {
-      this->mName = L"helix";
     }
-
-    T getRadiusX() const = delete;
-    T getRadiusY() const = delete;
 
     T getRadius() const
     {
-      return this->mRadiusX;
+      return this->mRadius;
     }
     T getStep() const
     {
-      return this->mRadiusY;
+      return this->mStep;
     }
 
     point_t<T> getCurvePoint(T at) const override
     {
-      return point_t<T>(this->mRadiusX * std::cos(at), this->mRadiusX * std::sin(at), this->mRadiusY * (at / (2 * std::numbers::pi))) + this->mPivot;
+      return point_t<T>(this->mRadius * std::cos(at), this->mRadius * std::sin(at), this->mStep * (at / (2 * std::numbers::pi))) + this->mPivot;
     }
     vector_t<T> getFirstDerivative(T at) const override
     {
-      return vector_t<T>(-this->mRadiusX * std::sin(at), this->mRadiusX * std::cos(at), this->mRadiusY / (2 * std::numbers::pi));
+      return vector_t<T>(-this->mRadius * std::sin(at), this->mRadius * std::cos(at), this->mStep / (2 * std::numbers::pi));
     }
 
     void printParameters(std::wostream& aOutStream, bool aPrintPivot = false) const override
     {
-      aOutStream << L"Radius=" << this->mRadiusX << L"; Step=" << this->mRadiusY;
+      aOutStream << L"helix: Radius=" << this->mRadius << L"; Step=" << this->mStep;
       if (aPrintPivot)
       {
         aOutStream << L"; ";
-        ellipse_t<T>::printPivot(aOutStream);
+        curve_t<T>::printPivot(aOutStream);
       }
     }
   };
